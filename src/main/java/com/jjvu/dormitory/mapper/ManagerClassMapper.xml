@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.ManagerClassMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.ManagerClass" >
+    <id column="MANAGER_CLASS_ID" property="managerClassId" jdbcType="INTEGER" />
+    <result column="MANAGER_CLASS_NAME" property="managerClassName" jdbcType="VARCHAR" />
+    <result column="POWER_INFO" property="powerInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MANAGER_CLASS_ID, MANAGER_CLASS_NAME, POWER_INFO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from manager_class
+    where MANAGER_CLASS_ID = #{managerClassId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager_class
+    where MANAGER_CLASS_ID = #{managerClassId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.ManagerClass" >
+    insert into manager_class (MANAGER_CLASS_ID, MANAGER_CLASS_NAME, 
+      POWER_INFO)
+    values (#{managerClassId,jdbcType=INTEGER}, #{managerClassName,jdbcType=VARCHAR}, 
+      #{powerInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.ManagerClass" >
+  	<selectKey keyProperty="managerClassId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into manager_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="managerClassId != null" >
+        MANAGER_CLASS_ID,
+      </if>
+      <if test="managerClassName != null" >
+        MANAGER_CLASS_NAME,
+      </if>
+      <if test="powerInfo != null" >
+        POWER_INFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="managerClassId != null" >
+        #{managerClassId,jdbcType=INTEGER},
+      </if>
+      <if test="managerClassName != null" >
+        #{managerClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="powerInfo != null" >
+        #{powerInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.ManagerClass" >
+    update manager_class
+    <set >
+      <if test="managerClassName != null" >
+        MANAGER_CLASS_NAME = #{managerClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="powerInfo != null" >
+        POWER_INFO = #{powerInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MANAGER_CLASS_ID = #{managerClassId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.ManagerClass" >
+    update manager_class
+    set MANAGER_CLASS_NAME = #{managerClassName,jdbcType=VARCHAR},
+      POWER_INFO = #{powerInfo,jdbcType=VARCHAR}
+    where MANAGER_CLASS_ID = #{managerClassId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.DormInfoMapperCustom" >
+  <resultMap id="ListResultMap" type="com.jjvu.dormitory.po.DormCustom" >
+    <id column="DORM_ID" property="dormId" jdbcType="VARCHAR" />
+    <result column="DORM_NAME" property="dormName" jdbcType="VARCHAR" />
+    <result column="DORM_LIMIT" property="dormLimit" jdbcType="VARCHAR" />
+    <result column="DORM_MANAGER" property="dormManager" jdbcType="VARCHAR" />
+    <result column="DORM_MANAGER_TEL" property="dormManagerTel" jdbcType="VARCHAR" />
+    <result column="FLOOR_COUNT" property="floorCount" jdbcType="INTEGER" />
+    <result column="ROOM_COUNT" property="roomCount" jdbcType="INTEGER" />
+    <result column="BED_COUNT" property="bedCount" jdbcType="INTEGER" />
+    <result column="ASSIGN_COUNT" property="assignCount" jdbcType="INTEGER" />
+    <result column="USE_CONDITION" property="useCondition" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DORM_ID, DORM_NAME, DORM_LIMIT, DORM_MANAGER, DORM_MANAGER_TEL, FLOOR_COUNT, ROOM_COUNT, 
+    BED_COUNT, ASSIGN_COUNT, USE_CONDITION, REMARK
+  </sql>
+  
+  <select id="queryList" parameterType="com.jjvu.dormitory.po.DormQueryVo" resultMap="ListResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from dorm_info
+    <where>
+      <if test="dormInfo != null">
+        <if test="dormInfo.dormLimit!=null and dormInfo.dormLimit!=''">
+          DORM_LIMIT = #{dormInfo.dormLimit}
+      	</if>
+      </if>
+    </where>
+  </select>
+  
+  <resultMap id="dormAndRoomInfo" type="com.jjvu.dormitory.po.DormCustom" >
+  	<id column="DORM_ID" property="dormId" jdbcType="VARCHAR" />
+    <result column="DORM_NAME" property="dormName" jdbcType="VARCHAR" />
+    <result column="DORM_LIMIT" property="dormLimit" jdbcType="VARCHAR" />
+    <result column="DORM_MANAGER" property="dormManager" jdbcType="VARCHAR" />
+    <result column="FLOOR_COUNT" property="floorCount" jdbcType="INTEGER" />
+    <collection property="dormRoomList" ofType="com.jjvu.dormitory.po.DormroomCustom">
+      <id column="ROOM_ID" property="roomId" />
+      <result column="ROOM_NUM" property="roomNum" />
+      <result column="ROOM_BEDS" property="roomBeds" />
+      <result column="ROOM_ASSIGNBEDS" property="roomAssignbeds" />
+      <collection property="collegeList" ofType="com.jjvu.dormitory.po.CollegeInfo">
+      	<result column="COLLEGE_NAME" property="collegeName"/>
+      </collection>
+    </collection>
+  </resultMap>
+
+  <select id="findDormAndroomToCollege" resultMap="dormAndRoomInfo" parameterType="com.jjvu.dormitory.po.DormQueryVo">
+  	SELECT
+		dorm_info.DORM_NAME,
+		dorm_info.DORM_LIMIT,
+		dorm_info.DORM_MANAGER,
+		dorm_info.FLOOR_COUNT,
+		dormroom_info.ROOM_ID,
+		dormroom_info.ROOM_NUM,
+		dormroom_info.ROOM_BEDS,
+		dormroom_info.ROOM_ASSIGNBEDS,
+		college_info.COLLEGE_NAME
+	FROM
+		dorm_info,
+		dormroom_info
+	LEFT JOIN college_room_info ON dormroom_info.ROOM_ID = college_room_info.ROOM_ID
+	LEFT JOIN college_info ON college_info.COLLEGE_ID = college_room_info.COLLEGE_ID
+	WHERE
+		dormroom_info.DORM_ID = dorm_info.DORM_ID
+	AND dormroom_info.ROOM_USECONDITION = 1
+	<if test="dormInfo != null">
+		<if test="dormInfo.dormId != null">
+		AND dorm_info.DORM_ID = #{dormInfo.dormId }
+		</if>
+	</if>
+	<if test="dormroomInfo != null">
+		<if test="dormroomInfo.floorNum != null">
+		AND dormroom_info.FLOOR_NUM = #{dormroomInfo.floorNum }
+		</if>
+	</if>
+  </select>
+  
+</mapper>

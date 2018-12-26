@@ -1,0 +1,59 @@
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd  
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd  
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!-- 
+		宿舍管理系统WEB端Service的bean管理	
+	 -->
+	<bean id="dormInfoService" class="com.jjvu.dormitory.Service.impl.DormInfoServiceImpl" />
+	
+	<bean id="dormRoomInfoService" class="com.jjvu.dormitory.Service.impl.DormroomInfoServiceImpl" />
+	
+	<bean id="managerService" class="com.jjvu.dormitory.Service.impl.ManagerServiceImpl" />
+		
+	<bean id="managerClassService" class="com.jjvu.dormitory.Service.impl.ManagerClassServiceImpl" />
+		
+	<bean id="collegeService" class="com.jjvu.dormitory.Service.impl.CollegeServiceImpl" />
+		
+	<bean id="professionService" class="com.jjvu.dormitory.Service.impl.ProfessionServiceImpl" />
+		
+	<bean id="systemInfoService" class="com.jjvu.dormitory.Service.impl.SystemInfoServiceImpl" />
+	
+	<bean id="studentService" class="com.jjvu.dormitory.Service.impl.StudentServiceImpl" />
+		
+	<bean id="moduleService" class="com.jjvu.dormitory.Service.impl.ModuleServiceImpl" />
+	
+	<bean id="moduleClassService" class="com.jjvu.dormitory.Service.impl.ModuleClassServiceImpl" />
+		
+	<bean id="maclassModuleService" class="com.jjvu.dormitory.Service.impl.MaclassModuleServiceImpl" />
+		
+	<bean id="roomDistributionService" class="com.jjvu.dormitory.Service.impl.RoomDistributionServiceImpl" />
+		
+		
+	<!-- 
+		APP端Service的bean管理	
+	 -->
+	
+	<bean id="backSchoolRecordsService" class="com.jjvu.dormitory.Service.impl.BackSchoolRecordsServiceImpl"/>
+	
+	<bean id="itemsInfoService" class="com.jjvu.dormitory.Service.impl.ItemsInfoServiceImpl"/>
+	
+	<bean id="itemsOutRecordsService" class="com.jjvu.dormitory.Service.impl.ItemsOutRecordsServiceImpl"/>
+	
+	<bean id="leaveSchoolRecordsService" class="com.jjvu.dormitory.Service.impl.LeaveSchoolRecordsServiceImpl"/>
+	
+	<bean id="studentsAppInfoService" class="com.jjvu.dormitory.Service.impl.StudentsAppInfoServiceImpl"/>
+	
+	<bean id="studentsLateRecordsService" class="com.jjvu.dormitory.Service.impl.StudentsLateRecordsServiceImpl"/>
+        
+</beans>

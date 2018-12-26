@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.DormroomInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.DormroomInfo" >
+    <id column="ROOM_ID" property="roomId" jdbcType="VARCHAR" />
+    <result column="ROOM_NUM" property="roomNum" jdbcType="VARCHAR" />
+    <result column="DORM_ID" property="dormId" jdbcType="VARCHAR" />
+    <result column="FLOOR_NUM" property="floorNum" jdbcType="INTEGER" />
+    <result column="ROOM_BEDS" property="roomBeds" jdbcType="INTEGER" />
+    <result column="ROOM_ASSIGNBEDS" property="roomAssignbeds" jdbcType="INTEGER" />
+    <result column="ROOM_HEAD" property="roomHead" jdbcType="VARCHAR" />
+    <result column="ROOM_TEL" property="roomTel" jdbcType="VARCHAR" />
+    <result column="ROOM_CHARGE" property="roomCharge" jdbcType="INTEGER" />
+    <result column="ROOM_USECONDITION" property="roomUsecondition" jdbcType="VARCHAR" />
+    <result column="ROOM_NOTES" property="roomNotes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROOM_ID, ROOM_NUM, DORM_ID, FLOOR_NUM, ROOM_BEDS, ROOM_ASSIGNBEDS, ROOM_HEAD, ROOM_TEL, 
+    ROOM_CHARGE, ROOM_USECONDITION, ROOM_NOTES
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dormroom_info
+    where ROOM_ID = #{roomId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dormroom_info
+    where ROOM_ID = #{roomId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.DormroomInfo" >
+    insert into dormroom_info (ROOM_ID, ROOM_NUM, DORM_ID, 
+      FLOOR_NUM, ROOM_BEDS, ROOM_ASSIGNBEDS, 
+      ROOM_HEAD, ROOM_TEL, ROOM_CHARGE, 
+      ROOM_USECONDITION, ROOM_NOTES)
+    values (#{roomId,jdbcType=VARCHAR}, #{roomNum,jdbcType=VARCHAR}, #{dormId,jdbcType=VARCHAR}, 
+      #{floorNum,jdbcType=INTEGER}, #{roomBeds,jdbcType=INTEGER}, #{roomAssignbeds,jdbcType=INTEGER}, 
+      #{roomHead,jdbcType=VARCHAR}, #{roomTel,jdbcType=VARCHAR}, #{roomCharge,jdbcType=INTEGER}, 
+      #{roomUsecondition,jdbcType=VARCHAR}, #{roomNotes,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.DormroomInfo" >
+    insert into dormroom_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        ROOM_ID,
+      </if>
+      <if test="roomNum != null" >
+        ROOM_NUM,
+      </if>
+      <if test="dormId != null" >
+        DORM_ID,
+      </if>
+      <if test="floorNum != null" >
+        FLOOR_NUM,
+      </if>
+      <if test="roomBeds != null" >
+        ROOM_BEDS,
+      </if>
+      <if test="roomAssignbeds != null" >
+        ROOM_ASSIGNBEDS,
+      </if>
+      <if test="roomHead != null" >
+        ROOM_HEAD,
+      </if>
+      <if test="roomTel != null" >
+        ROOM_TEL,
+      </if>
+      <if test="roomCharge != null" >
+        ROOM_CHARGE,
+      </if>
+      <if test="roomUsecondition != null" >
+        ROOM_USECONDITION,
+      </if>
+      <if test="roomNotes != null" >
+        ROOM_NOTES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNum != null" >
+        #{roomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="dormId != null" >
+        #{dormId,jdbcType=VARCHAR},
+      </if>
+      <if test="floorNum != null" >
+        #{floorNum,jdbcType=INTEGER},
+      </if>
+      <if test="roomBeds != null" >
+        #{roomBeds,jdbcType=INTEGER},
+      </if>
+      <if test="roomAssignbeds != null" >
+        #{roomAssignbeds,jdbcType=INTEGER},
+      </if>
+      <if test="roomHead != null" >
+        #{roomHead,jdbcType=VARCHAR},
+      </if>
+      <if test="roomTel != null" >
+        #{roomTel,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCharge != null" >
+        #{roomCharge,jdbcType=INTEGER},
+      </if>
+      <if test="roomUsecondition != null" >
+        #{roomUsecondition,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNotes != null" >
+        #{roomNotes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.DormroomInfo" >
+    update dormroom_info
+    <set >
+      <if test="roomNum != null" >
+        ROOM_NUM = #{roomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="dormId != null" >
+        DORM_ID = #{dormId,jdbcType=VARCHAR},
+      </if>
+      <if test="floorNum != null" >
+        FLOOR_NUM = #{floorNum,jdbcType=INTEGER},
+      </if>
+      <if test="roomBeds != null" >
+        ROOM_BEDS = #{roomBeds,jdbcType=INTEGER},
+      </if>
+      <if test="roomAssignbeds != null" >
+        ROOM_ASSIGNBEDS = #{roomAssignbeds,jdbcType=INTEGER},
+      </if>
+      <if test="roomHead != null" >
+        ROOM_HEAD = #{roomHead,jdbcType=VARCHAR},
+      </if>
+      <if test="roomTel != null" >
+        ROOM_TEL = #{roomTel,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCharge != null" >
+        ROOM_CHARGE = #{roomCharge,jdbcType=INTEGER},
+      </if>
+      <if test="roomUsecondition != null" >
+        ROOM_USECONDITION = #{roomUsecondition,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNotes != null" >
+        ROOM_NOTES = #{roomNotes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROOM_ID = #{roomId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.DormroomInfo" >
+    update dormroom_info
+    set ROOM_NUM = #{roomNum,jdbcType=VARCHAR},
+      DORM_ID = #{dormId,jdbcType=VARCHAR},
+      FLOOR_NUM = #{floorNum,jdbcType=INTEGER},
+      ROOM_BEDS = #{roomBeds,jdbcType=INTEGER},
+      ROOM_ASSIGNBEDS = #{roomAssignbeds,jdbcType=INTEGER},
+      ROOM_HEAD = #{roomHead,jdbcType=VARCHAR},
+      ROOM_TEL = #{roomTel,jdbcType=VARCHAR},
+      ROOM_CHARGE = #{roomCharge,jdbcType=INTEGER},
+      ROOM_USECONDITION = #{roomUsecondition,jdbcType=VARCHAR},
+      ROOM_NOTES = #{roomNotes,jdbcType=VARCHAR}
+    where ROOM_ID = #{roomId,jdbcType=VARCHAR}
+  </update>
+</mapper>

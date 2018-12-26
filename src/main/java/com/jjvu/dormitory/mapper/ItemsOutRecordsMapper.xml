@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.ItemsOutRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.ItemsOutRecords" >
+    <id column="ITEMS_RECORDS_ID" property="itemsRecordsId" jdbcType="VARCHAR" />
+    <result column="ITEMS_INFO_ID" property="itemsInfoId" jdbcType="VARCHAR" />
+    <result column="ITEMS_RECORDS_TIME" property="itemsRecordsTime" jdbcType="VARCHAR" />
+    <result column="ITEMS_RECORDS_STATE" property="itemsRecordsState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ITEMS_RECORDS_ID, ITEMS_INFO_ID, ITEMS_RECORDS_TIME, ITEMS_RECORDS_STATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jjvu.dormitory.po.ItemsOutRecordsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from items_out_records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from items_out_records
+    where ITEMS_RECORDS_ID = #{itemsRecordsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from items_out_records
+    where ITEMS_RECORDS_ID = #{itemsRecordsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jjvu.dormitory.po.ItemsOutRecordsExample" >
+    delete from items_out_records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.ItemsOutRecords" >
+    insert into items_out_records (ITEMS_RECORDS_ID, ITEMS_INFO_ID, ITEMS_RECORDS_TIME, 
+      ITEMS_RECORDS_STATE)
+    values (#{itemsRecordsId,jdbcType=VARCHAR}, #{itemsInfoId,jdbcType=VARCHAR}, #{itemsRecordsTime,jdbcType=VARCHAR}, 
+      #{itemsRecordsState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.ItemsOutRecords" >
+    insert into items_out_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemsRecordsId != null" >
+        ITEMS_RECORDS_ID,
+      </if>
+      <if test="itemsInfoId != null" >
+        ITEMS_INFO_ID,
+      </if>
+      <if test="itemsRecordsTime != null" >
+        ITEMS_RECORDS_TIME,
+      </if>
+      <if test="itemsRecordsState != null" >
+        ITEMS_RECORDS_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemsRecordsId != null" >
+        #{itemsRecordsId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsInfoId != null" >
+        #{itemsInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsRecordsTime != null" >
+        #{itemsRecordsTime,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsRecordsState != null" >
+        #{itemsRecordsState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jjvu.dormitory.po.ItemsOutRecordsExample" resultType="java.lang.Integer" >
+    select count(*) from items_out_records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update items_out_records
+    <set >
+      <if test="record.itemsRecordsId != null" >
+        ITEMS_RECORDS_ID = #{record.itemsRecordsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsInfoId != null" >
+        ITEMS_INFO_ID = #{record.itemsInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsRecordsTime != null" >
+        ITEMS_RECORDS_TIME = #{record.itemsRecordsTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsRecordsState != null" >
+        ITEMS_RECORDS_STATE = #{record.itemsRecordsState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update items_out_records
+    set ITEMS_RECORDS_ID = #{record.itemsRecordsId,jdbcType=VARCHAR},
+      ITEMS_INFO_ID = #{record.itemsInfoId,jdbcType=VARCHAR},
+      ITEMS_RECORDS_TIME = #{record.itemsRecordsTime,jdbcType=VARCHAR},
+      ITEMS_RECORDS_STATE = #{record.itemsRecordsState,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.ItemsOutRecords" >
+    update items_out_records
+    <set >
+      <if test="itemsInfoId != null" >
+        ITEMS_INFO_ID = #{itemsInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsRecordsTime != null" >
+        ITEMS_RECORDS_TIME = #{itemsRecordsTime,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsRecordsState != null" >
+        ITEMS_RECORDS_STATE = #{itemsRecordsState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ITEMS_RECORDS_ID = #{itemsRecordsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.ItemsOutRecords" >
+    update items_out_records
+    set ITEMS_INFO_ID = #{itemsInfoId,jdbcType=VARCHAR},
+      ITEMS_RECORDS_TIME = #{itemsRecordsTime,jdbcType=VARCHAR},
+      ITEMS_RECORDS_STATE = #{itemsRecordsState,jdbcType=VARCHAR}
+    where ITEMS_RECORDS_ID = #{itemsRecordsId,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="ItemsOutCustomMap" type="com.jjvu.dormitory.po.ItemsOutRecordsCustom">
+    <id column="ITEMS_RECORDS_ID" jdbcType="VARCHAR" property="itemsRecordsId" />
+    <result column="ITEMS_INFO_NAME" jdbcType="VARCHAR" property="itemsInfoName" />
+    <result column="ITEMS_RECORDS_TIME" jdbcType="VARCHAR" property="itemsRecordsTime" />
+    <result column="ITEMS_RECORDS_STATE" jdbcType="VARCHAR" property="itemsRecordsState" />
+  </resultMap>
+  <select id="itemsOutList" parameterType="java.lang.String" resultMap="ItemsOutCustomMap">
+  	SELECT a.ITEMS_RECORDS_ID,b.ITEMS_INFO_NAME,a.ITEMS_RECORDS_TIME,a.ITEMS_RECORDS_STATE FROM items_out_records a 
+  	JOIN items_info b ON a.ITEMS_INFO_ID=b.ITEMS_INFO_ID  
+  	WHERE b.STUDENT_EXAM_NUM=#{identifying} 
+  	ORDER BY ITEMS_RECORDS_TIME DESC LIMIT 7
+  </select>
+</mapper>

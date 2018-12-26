@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.SystemInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.SystemInfo" >
+    <id column="SYSTEM_ID" property="systemId" jdbcType="INTEGER" />
+    <result column="SYSTEM_NAME" property="systemName" jdbcType="VARCHAR" />
+    <result column="SYSTEM_YEARS" property="systemYears" jdbcType="INTEGER" />
+    <result column="SYSTEM_INFO" property="systemInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SYSTEM_ID, SYSTEM_NAME, SYSTEM_YEARS, SYSTEM_INFO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_info
+    where SYSTEM_ID = #{systemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from system_info
+    where SYSTEM_ID = #{systemId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.SystemInfo" >
+    insert into system_info (SYSTEM_ID, SYSTEM_NAME, SYSTEM_YEARS, 
+      SYSTEM_INFO)
+    values (#{systemId,jdbcType=INTEGER}, #{systemName,jdbcType=VARCHAR}, #{systemYears,jdbcType=INTEGER}, 
+      #{systemInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.SystemInfo" >
+  	<selectKey keyProperty="systemId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="systemName != null" >
+        SYSTEM_NAME,
+      </if>
+      <if test="systemYears != null" >
+        SYSTEM_YEARS,
+      </if>
+      <if test="systemInfo != null" >
+        SYSTEM_INFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="systemId != null" >
+        #{systemId,jdbcType=INTEGER},
+      </if>
+      <if test="systemName != null" >
+        #{systemName,jdbcType=VARCHAR},
+      </if>
+      <if test="systemYears != null" >
+        #{systemYears,jdbcType=INTEGER},
+      </if>
+      <if test="systemInfo != null" >
+        #{systemInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.SystemInfo" >
+    update system_info
+    <set >
+      <if test="systemName != null" >
+        SYSTEM_NAME = #{systemName,jdbcType=VARCHAR},
+      </if>
+      <if test="systemYears != null" >
+        SYSTEM_YEARS = #{systemYears,jdbcType=INTEGER},
+      </if>
+      <if test="systemInfo != null" >
+        SYSTEM_INFO = #{systemInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SYSTEM_ID = #{systemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.SystemInfo" >
+    update system_info
+    set SYSTEM_NAME = #{systemName,jdbcType=VARCHAR},
+      SYSTEM_YEARS = #{systemYears,jdbcType=INTEGER},
+      SYSTEM_INFO = #{systemInfo,jdbcType=VARCHAR}
+    where SYSTEM_ID = #{systemId,jdbcType=INTEGER}
+  </update>
+</mapper>

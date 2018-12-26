@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.CollegeInfoMapperCustom" >
+  <resultMap id="QueryMap" type="com.jjvu.dormitory.po.CollegeCustom" >
+    <id column="COLLEGE_ID" property="collegeId" jdbcType="VARCHAR" />
+    <result column="COLLEGE_NAME" property="collegeName" jdbcType="VARCHAR" />
+    <result column="COLLEGE_LINKMAN" property="collegeLinkman" jdbcType="VARCHAR" />
+    <result column="COLLEGE_TEL" property="collegeTel" jdbcType="VARCHAR" />
+    <result column="COLLEGE_INTRO" property="collegeIntro" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    COLLEGE_ID, COLLEGE_NAME, COLLEGE_LINKMAN, COLLEGE_TEL, COLLEGE_INTRO
+  </sql>
+  
+  <select id="queryList" resultMap="QueryMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from college_info
+  </select>
+  
+</mapper>

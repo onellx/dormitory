@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.ModuleInfoMapperCustom" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.ModuleCustom" >
+    <id column="MODULE_ID" property="moduleId" jdbcType="INTEGER" />
+    <result column="MODULE_CLASS_ID" property="moduleClassId" jdbcType="INTEGER" />
+    <result column="MODULE_NAME" property="moduleName" jdbcType="VARCHAR" />
+    <result column="MODULE_URL" property="moduleUrl" jdbcType="VARCHAR" />
+    <result column="MOSTATE" property="mostate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MODULE_ID, MODULE_NAME, MODULE_URL, MOSTATE
+  </sql>
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.jjvu.dormitory.po.ModuleQueryVo">
+  	select
+  	<include refid="Base_Column_List" />
+  	from module_info
+  </select>
+  
+  <select id="findAvailable" resultMap="BaseResultMap">
+  	SELECT
+		*
+	FROM
+		module_info
+	WHERE
+		MOSTATE = 1
+  </select>
+  
+  <select id="moduleForManager" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT
+		module_info.*
+	FROM
+		manager,
+		module_info,
+		maclass_module_info
+	WHERE
+		manager.MANAGER_ID = #{managerId }
+	AND manager.MANAGER_CLASS_ID = maclass_module_info.MANAGER_CLASS_ID
+	AND module_info.MODULE_ID = maclass_module_info.MODULE_ID
+	AND module_info.MOSTATE = 1
+  </select>
+  
+</mapper>

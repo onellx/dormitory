@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.CollegeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.CollegeInfo" >
+    <id column="COLLEGE_ID" property="collegeId" jdbcType="VARCHAR" />
+    <result column="COLLEGE_NAME" property="collegeName" jdbcType="VARCHAR" />
+    <result column="COLLEGE_LINKMAN" property="collegeLinkman" jdbcType="VARCHAR" />
+    <result column="COLLEGE_TEL" property="collegeTel" jdbcType="VARCHAR" />
+    <result column="COLLEGE_INTRO" property="collegeIntro" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    COLLEGE_ID, COLLEGE_NAME, COLLEGE_LINKMAN, COLLEGE_TEL, COLLEGE_INTRO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from college_info
+    where COLLEGE_ID = #{collegeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from college_info
+    where COLLEGE_ID = #{collegeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.CollegeInfo" >
+    insert into college_info (COLLEGE_ID, COLLEGE_NAME, COLLEGE_LINKMAN, 
+      COLLEGE_TEL, COLLEGE_INTRO)
+    values (#{collegeId,jdbcType=VARCHAR}, #{collegeName,jdbcType=VARCHAR}, #{collegeLinkman,jdbcType=VARCHAR}, 
+      #{collegeTel,jdbcType=VARCHAR}, #{collegeIntro,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.CollegeInfo" >
+    insert into college_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="collegeId != null" >
+        COLLEGE_ID,
+      </if>
+      <if test="collegeName != null" >
+        COLLEGE_NAME,
+      </if>
+      <if test="collegeLinkman != null" >
+        COLLEGE_LINKMAN,
+      </if>
+      <if test="collegeTel != null" >
+        COLLEGE_TEL,
+      </if>
+      <if test="collegeIntro != null" >
+        COLLEGE_INTRO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="collegeId != null" >
+        #{collegeId,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeName != null" >
+        #{collegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeLinkman != null" >
+        #{collegeLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeTel != null" >
+        #{collegeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeIntro != null" >
+        #{collegeIntro,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.CollegeInfo" >
+    update college_info
+    <set >
+      <if test="collegeName != null" >
+        COLLEGE_NAME = #{collegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeLinkman != null" >
+        COLLEGE_LINKMAN = #{collegeLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeTel != null" >
+        COLLEGE_TEL = #{collegeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeIntro != null" >
+        COLLEGE_INTRO = #{collegeIntro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COLLEGE_ID = #{collegeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.CollegeInfo" >
+    update college_info
+    set COLLEGE_NAME = #{collegeName,jdbcType=VARCHAR},
+      COLLEGE_LINKMAN = #{collegeLinkman,jdbcType=VARCHAR},
+      COLLEGE_TEL = #{collegeTel,jdbcType=VARCHAR},
+      COLLEGE_INTRO = #{collegeIntro,jdbcType=VARCHAR}
+    where COLLEGE_ID = #{collegeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

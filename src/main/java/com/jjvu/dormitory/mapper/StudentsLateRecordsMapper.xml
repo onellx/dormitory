@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.StudentsLateRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.StudentsLateRecords" >
+    <id column="LATE_RECORDS_ID" property="lateRecordsId" jdbcType="VARCHAR" />
+    <result column="STUDENT_EXAM_NUM" property="studentExamNum" jdbcType="VARCHAR" />
+    <result column="ITEMS_RECORDS_TIME" property="itemsRecordsTime" jdbcType="VARCHAR" />
+    <result column="LATE_RECORDS_STATE" property="lateRecordsState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LATE_RECORDS_ID, STUDENT_EXAM_NUM, ITEMS_RECORDS_TIME, LATE_RECORDS_STATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jjvu.dormitory.po.StudentsLateRecordsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from students_late_records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from students_late_records
+    where LATE_RECORDS_ID = #{lateRecordsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from students_late_records
+    where LATE_RECORDS_ID = #{lateRecordsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jjvu.dormitory.po.StudentsLateRecordsExample" >
+    delete from students_late_records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.StudentsLateRecords" >
+    insert into students_late_records (LATE_RECORDS_ID, STUDENT_EXAM_NUM, ITEMS_RECORDS_TIME, 
+      LATE_RECORDS_STATE)
+    values (#{lateRecordsId,jdbcType=VARCHAR}, #{studentExamNum,jdbcType=VARCHAR}, #{itemsRecordsTime,jdbcType=VARCHAR}, 
+      #{lateRecordsState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.StudentsLateRecords" >
+    insert into students_late_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lateRecordsId != null" >
+        LATE_RECORDS_ID,
+      </if>
+      <if test="studentExamNum != null" >
+        STUDENT_EXAM_NUM,
+      </if>
+      <if test="itemsRecordsTime != null" >
+        ITEMS_RECORDS_TIME,
+      </if>
+      <if test="lateRecordsState != null" >
+        LATE_RECORDS_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lateRecordsId != null" >
+        #{lateRecordsId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentExamNum != null" >
+        #{studentExamNum,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsRecordsTime != null" >
+        #{itemsRecordsTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lateRecordsState != null" >
+        #{lateRecordsState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jjvu.dormitory.po.StudentsLateRecordsExample" resultType="java.lang.Integer" >
+    select count(*) from students_late_records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update students_late_records
+    <set >
+      <if test="record.lateRecordsId != null" >
+        LATE_RECORDS_ID = #{record.lateRecordsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentExamNum != null" >
+        STUDENT_EXAM_NUM = #{record.studentExamNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsRecordsTime != null" >
+        ITEMS_RECORDS_TIME = #{record.itemsRecordsTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lateRecordsState != null" >
+        LATE_RECORDS_STATE = #{record.lateRecordsState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update students_late_records
+    set LATE_RECORDS_ID = #{record.lateRecordsId,jdbcType=VARCHAR},
+      STUDENT_EXAM_NUM = #{record.studentExamNum,jdbcType=VARCHAR},
+      ITEMS_RECORDS_TIME = #{record.itemsRecordsTime,jdbcType=VARCHAR},
+      LATE_RECORDS_STATE = #{record.lateRecordsState,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.StudentsLateRecords" >
+    update students_late_records
+    <set >
+      <if test="studentExamNum != null" >
+        STUDENT_EXAM_NUM = #{studentExamNum,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsRecordsTime != null" >
+        ITEMS_RECORDS_TIME = #{itemsRecordsTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lateRecordsState != null" >
+        LATE_RECORDS_STATE = #{lateRecordsState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LATE_RECORDS_ID = #{lateRecordsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.StudentsLateRecords" >
+    update students_late_records
+    set STUDENT_EXAM_NUM = #{studentExamNum,jdbcType=VARCHAR},
+      ITEMS_RECORDS_TIME = #{itemsRecordsTime,jdbcType=VARCHAR},
+      LATE_RECORDS_STATE = #{lateRecordsState,jdbcType=VARCHAR}
+    where LATE_RECORDS_ID = #{lateRecordsId,jdbcType=VARCHAR}
+  </update>
+</mapper>

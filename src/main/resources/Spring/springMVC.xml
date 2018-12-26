@@ -1,0 +1,84 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd 
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+	
+	<!-- 批量扫描注解的Handler -->
+	<context:component-scan base-package="com.jjvu.dormitory.controller,
+										  com.jjvu.dormitory.app.controller,
+										  com.jjvu.dormitory.external" />
+
+	<!--
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
+	-->
+
+	<!-- 使用mvc:annotation-driven代替上面的注解映射器和注解适配器配置
+		mvc:annotation-driven默认加载了很多的参数绑定方法
+		所以实际开发的时候使用mvc:annotation-driven
+	 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+
+	<!-- 配置试图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 可以配置jsp路径的前缀和后缀 -->
+		<!--property name="prefix" value="路径前缀" /-->
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- 校验器 -->
+	<!-- bean id="validator" 
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<property name="messageInterpolator" ref="messageSource" />
+	</bean>
+	<bean id="messageSource" 
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:CustomValidationMessages</value>
+			</list>
+		</property>
+		<property name="fileEncodings" value="utf-8" />
+		<property name="cacheSeconds" value="120" />
+	</bean -->
+	
+	<!-- 全局异常处理器 -->
+	<bean class="com.jjvu.dormitory.exception.CustomExceptionResolver" />
+	
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 
+				/**的意思是所有文件夹及里面的子文件夹/*是所有文件夹，不含子文件夹
+				/是web项目的根目录
+			 -->
+			<!-- 设置拦截的url -->
+			<mvc:mapping path="/*/*"/>
+			<!-- 设置不拦截的url -->
+			<mvc:exclude-mapping path="/app/*"/>
+			<mvc:exclude-mapping path="/External/*"/>
+			<mvc:exclude-mapping path="/login.jsp"/>
+			<bean class="com.jjvu.dormitory.interceptor.DormitoryInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 文件上传 -->
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>1024000</value>
+		</property>
+	</bean>
+	
+</beans>

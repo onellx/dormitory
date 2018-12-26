@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.MaclassModuleInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.MaclassModuleInfo" >
+    <id column="MM_ID" property="mmId" jdbcType="INTEGER" />
+    <result column="MANAGER_CLASS_ID" property="managerClassId" jdbcType="INTEGER" />
+    <result column="MODULE_ID" property="moduleId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MM_ID, MANAGER_CLASS_ID, MODULE_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from maclass_module_info
+    where MM_ID = #{mmId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from maclass_module_info
+    where MM_ID = #{mmId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.MaclassModuleInfo" >
+    insert into maclass_module_info (MM_ID, MANAGER_CLASS_ID, MODULE_ID
+      )
+    values (#{mmId,jdbcType=INTEGER}, #{managerClassId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.MaclassModuleInfo" >
+    insert into maclass_module_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mmId != null" >
+        MM_ID,
+      </if>
+      <if test="managerClassId != null" >
+        MANAGER_CLASS_ID,
+      </if>
+      <if test="moduleId != null" >
+        MODULE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mmId != null" >
+        #{mmId,jdbcType=INTEGER},
+      </if>
+      <if test="managerClassId != null" >
+        #{managerClassId,jdbcType=INTEGER},
+      </if>
+      <if test="moduleId != null" >
+        #{moduleId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.MaclassModuleInfo" >
+    update maclass_module_info
+    <set >
+      <if test="managerClassId != null" >
+        MANAGER_CLASS_ID = #{managerClassId,jdbcType=INTEGER},
+      </if>
+      <if test="moduleId != null" >
+        MODULE_ID = #{moduleId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where MM_ID = #{mmId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.MaclassModuleInfo" >
+    update maclass_module_info
+    set MANAGER_CLASS_ID = #{managerClassId,jdbcType=INTEGER},
+      MODULE_ID = #{moduleId,jdbcType=INTEGER}
+    where MM_ID = #{mmId,jdbcType=INTEGER}
+  </update>
+</mapper>

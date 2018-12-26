@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.ModuleClassInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.ModuleClassInfo" >
+    <id column="MODULE_CLASS_ID" property="moduleClassId" jdbcType="INTEGER" />
+    <result column="MODULE_CLASS_NAME" property="moduleClassName" jdbcType="VARCHAR" />
+    <result column="MODULE_INTRO" property="moduleIntro" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MODULE_CLASS_ID, MODULE_CLASS_NAME, MODULE_INTRO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from module_class_info
+    where MODULE_CLASS_ID = #{moduleClassId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from module_class_info
+    where MODULE_CLASS_ID = #{moduleClassId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.ModuleClassInfo" >
+    insert into module_class_info (MODULE_CLASS_ID, MODULE_CLASS_NAME, MODULE_INTRO
+      )
+    values (#{moduleClassId,jdbcType=INTEGER}, #{moduleClassName,jdbcType=VARCHAR}, #{moduleIntro,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.ModuleClassInfo" >
+    insert into module_class_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moduleClassId != null" >
+        MODULE_CLASS_ID,
+      </if>
+      <if test="moduleClassName != null" >
+        MODULE_CLASS_NAME,
+      </if>
+      <if test="moduleIntro != null" >
+        MODULE_INTRO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moduleClassId != null" >
+        #{moduleClassId,jdbcType=INTEGER},
+      </if>
+      <if test="moduleClassName != null" >
+        #{moduleClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleIntro != null" >
+        #{moduleIntro,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.ModuleClassInfo" >
+    update module_class_info
+    <set >
+      <if test="moduleClassName != null" >
+        MODULE_CLASS_NAME = #{moduleClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleIntro != null" >
+        MODULE_INTRO = #{moduleIntro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MODULE_CLASS_ID = #{moduleClassId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.ModuleClassInfo" >
+    update module_class_info
+    set MODULE_CLASS_NAME = #{moduleClassName,jdbcType=VARCHAR},
+      MODULE_INTRO = #{moduleIntro,jdbcType=VARCHAR}
+    where MODULE_CLASS_ID = #{moduleClassId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.ModuleClassInfoMapperCustom" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.ModuleClassInfo" >
+    <id column="MODULE_CLASS_ID" property="moduleClassId" jdbcType="INTEGER" />
+    <result column="MODULE_CLASS_NAME" property="moduleClassName" jdbcType="VARCHAR" />
+    <result column="MODULE_INTRO" property="moduleIntro" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ModuleForClass" type="com.jjvu.dormitory.po.ModuleClassCustom" >
+    <id column="MODULE_CLASS_ID" property="moduleClassId" jdbcType="INTEGER" />
+    <result column="MODULE_CLASS_NAME" property="moduleClassName" jdbcType="VARCHAR" />
+    <result column="MODULE_INTRO" property="moduleIntro" jdbcType="VARCHAR" />
+    <collection property="moduleList" ofType="com.jjvu.dormitory.po.ModuleInfo">
+    	<result column="MODULE_NAME" property="moduleName" jdbcType="VARCHAR" />
+    	<result column="MODULE_URL" property="moduleUrl" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  
+  <select id="moduleForNavInClass" resultMap="ModuleForClass" parameterType="java.lang.Integer">
+  	SELECT
+		module_class_info.*, module_info.MODULE_NAME,
+		module_info.MODULE_URL
+	FROM
+		module_class_info,
+		module_info,
+		manager,
+		maclass_module_info
+	WHERE
+		manager.MANAGER_ID = #{managerId }
+	AND manager.MANAGER_CLASS_ID = maclass_module_info.MANAGER_CLASS_ID
+	AND module_info.MODULE_ID = maclass_module_info.MODULE_ID
+	AND module_class_info.MODULE_CLASS_ID = module_info.MODULE_CLASS_ID
+	AND module_info.MOSTATE = 1
+	ORDER BY
+		module_class_info.MODULE_CLASS_ID,
+		module_info.MODULE_ID
+  </select>
+  
+</mapper>

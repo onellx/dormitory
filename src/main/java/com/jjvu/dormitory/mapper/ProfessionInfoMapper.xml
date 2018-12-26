@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jjvu.dormitory.mapper.ProfessionInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.ProfessionInfo">
+    <id column="PROFESSION_ID" jdbcType="VARCHAR" property="professionId" />
+    <result column="PROFESSION_NAME" jdbcType="VARCHAR" property="professionName" />
+    <result column="COLLEGE_ID" jdbcType="VARCHAR" property="collegeId" />
+    <result column="PROFESSION_LINKMAN" jdbcType="VARCHAR" property="professionLinkman" />
+    <result column="PROFESSION_TEL" jdbcType="VARCHAR" property="professionTel" />
+    <result column="PROFESSION_INTRO" jdbcType="VARCHAR" property="professionIntro" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PROFESSION_ID, PROFESSION_NAME, COLLEGE_ID, PROFESSION_LINKMAN, PROFESSION_TEL, PROFESSION_INTRO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from profession_info
+    where PROFESSION_ID = #{professionId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from profession_info
+    where PROFESSION_ID = #{professionId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.ProfessionInfo">
+    insert into profession_info (PROFESSION_ID, PROFESSION_NAME, COLLEGE_ID, 
+      PROFESSION_LINKMAN, PROFESSION_TEL, PROFESSION_INTRO
+      )
+    values (#{professionId,jdbcType=VARCHAR}, #{professionName,jdbcType=VARCHAR}, #{collegeId,jdbcType=VARCHAR}, 
+      #{professionLinkman,jdbcType=VARCHAR}, #{professionTel,jdbcType=VARCHAR}, #{professionIntro,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.ProfessionInfo">
+    insert into profession_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="professionId != null">
+        PROFESSION_ID,
+      </if>
+      <if test="professionName != null">
+        PROFESSION_NAME,
+      </if>
+      <if test="collegeId != null">
+        COLLEGE_ID,
+      </if>
+      <if test="professionLinkman != null">
+        PROFESSION_LINKMAN,
+      </if>
+      <if test="professionTel != null">
+        PROFESSION_TEL,
+      </if>
+      <if test="professionIntro != null">
+        PROFESSION_INTRO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="professionId != null">
+        #{professionId,jdbcType=VARCHAR},
+      </if>
+      <if test="professionName != null">
+        #{professionName,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeId != null">
+        #{collegeId,jdbcType=VARCHAR},
+      </if>
+      <if test="professionLinkman != null">
+        #{professionLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="professionTel != null">
+        #{professionTel,jdbcType=VARCHAR},
+      </if>
+      <if test="professionIntro != null">
+        #{professionIntro,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.ProfessionInfo">
+    update profession_info
+    <set>
+      <if test="professionName != null">
+        PROFESSION_NAME = #{professionName,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeId != null">
+        COLLEGE_ID = #{collegeId,jdbcType=VARCHAR},
+      </if>
+      <if test="professionLinkman != null">
+        PROFESSION_LINKMAN = #{professionLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="professionTel != null">
+        PROFESSION_TEL = #{professionTel,jdbcType=VARCHAR},
+      </if>
+      <if test="professionIntro != null">
+        PROFESSION_INTRO = #{professionIntro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROFESSION_ID = #{professionId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.ProfessionInfo">
+    update profession_info
+    set PROFESSION_NAME = #{professionName,jdbcType=VARCHAR},
+      COLLEGE_ID = #{collegeId,jdbcType=VARCHAR},
+      PROFESSION_LINKMAN = #{professionLinkman,jdbcType=VARCHAR},
+      PROFESSION_TEL = #{professionTel,jdbcType=VARCHAR},
+      PROFESSION_INTRO = #{professionIntro,jdbcType=VARCHAR}
+    where PROFESSION_ID = #{professionId,jdbcType=VARCHAR}
+  </update>
+</mapper>

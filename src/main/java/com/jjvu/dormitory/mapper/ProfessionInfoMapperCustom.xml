@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jjvu.dormitory.mapper.ProfessionInfoMapperCustom">
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.ProfessionCustom">
+    <id column="PROFESSION_ID" jdbcType="VARCHAR" property="professionId" />
+    <result column="PROFESSION_NAME" jdbcType="VARCHAR" property="professionName" />
+    <result column="COLLEGE_ID" jdbcType="VARCHAR" property="collegeId" />
+    <result column="PROFESSION_LINKMAN" jdbcType="VARCHAR" property="professionLinkman" />
+    <result column="PROFESSION_TEL" jdbcType="VARCHAR" property="professionTel" />
+    <result column="PROFESSION_INTRO" jdbcType="VARCHAR" property="professionIntro" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PROFESSION_ID, PROFESSION_NAME, COLLEGE_ID, PROFESSION_LINKMAN, PROFESSION_TEL, PROFESSION_INTRO
+  </sql>
+  <select id="queryList" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from profession_info
+  </select>
+</mapper>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.StudentInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.StudentInfo" >
+    <id column="STUDENT_ID" property="studentId" jdbcType="VARCHAR" />
+    <result column="STUDENT_NO" property="studentNo" jdbcType="VARCHAR" />
+    <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR" />
+    <result column="PROFESSION_ID" property="professionId" jdbcType="VARCHAR" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="INTEGER" />
+    <result column="STUDENT_ENTER_DATE" property="studentEnterDate" jdbcType="DATE" />
+    <result column="STUDENT_IDCARD_TYPE" property="studentIdcardType" jdbcType="VARCHAR" />
+    <result column="STUDENT_IDCARD" property="studentIdcard" jdbcType="VARCHAR" />
+    <result column="STUDENT_SEX" property="studentSex" jdbcType="VARCHAR" />
+    <result column="STUDENT_BIRTHDAY" property="studentBirthday" jdbcType="DATE" />
+    <result column="STUDENT_NATIVE" property="studentNative" jdbcType="VARCHAR" />
+    <result column="STUDENT_NATION" property="studentNation" jdbcType="VARCHAR" />
+    <result column="STUDENT_TEL" property="studentTel" jdbcType="VARCHAR" />
+    <result column="STUDENT_EMAIL" property="studentEmail" jdbcType="VARCHAR" />
+    <result column="STUDENT_ADDRESS" property="studentAddress" jdbcType="VARCHAR" />
+    <result column="STUDENT_CODE" property="studentCode" jdbcType="VARCHAR" />
+    <result column="STUDENT_LOCAL" property="studentLocal" jdbcType="VARCHAR" />
+    <result column="STUDENT_EXAM_NUM" property="studentExamNum" jdbcType="VARCHAR" />
+    <result column="ROOM_ID" property="roomId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    STUDENT_ID, STUDENT_NO, STUDENT_NAME, PROFESSION_ID, SYSTEM_ID, STUDENT_ENTER_DATE, 
+    STUDENT_IDCARD_TYPE, STUDENT_IDCARD, STUDENT_SEX, STUDENT_BIRTHDAY, STUDENT_NATIVE, 
+    STUDENT_NATION, STUDENT_TEL, STUDENT_EMAIL, STUDENT_ADDRESS, STUDENT_CODE, STUDENT_LOCAL, 
+    STUDENT_EXAM_NUM, ROOM_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_info
+    where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student_info
+    where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.StudentInfo" >
+    insert into student_info (STUDENT_ID, STUDENT_NO, STUDENT_NAME, 
+      PROFESSION_ID, SYSTEM_ID, STUDENT_ENTER_DATE, 
+      STUDENT_IDCARD_TYPE, STUDENT_IDCARD, STUDENT_SEX, 
+      STUDENT_BIRTHDAY, STUDENT_NATIVE, STUDENT_NATION, 
+      STUDENT_TEL, STUDENT_EMAIL, STUDENT_ADDRESS, 
+      STUDENT_CODE, STUDENT_LOCAL, STUDENT_EXAM_NUM, 
+      ROOM_ID)
+    values (#{studentId,jdbcType=VARCHAR}, #{studentNo,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, 
+      #{professionId,jdbcType=VARCHAR}, #{systemId,jdbcType=INTEGER}, #{studentEnterDate,jdbcType=DATE}, 
+      #{studentIdcardType,jdbcType=VARCHAR}, #{studentIdcard,jdbcType=VARCHAR}, #{studentSex,jdbcType=VARCHAR}, 
+      #{studentBirthday,jdbcType=DATE}, #{studentNative,jdbcType=VARCHAR}, #{studentNation,jdbcType=VARCHAR}, 
+      #{studentTel,jdbcType=VARCHAR}, #{studentEmail,jdbcType=VARCHAR}, #{studentAddress,jdbcType=VARCHAR}, 
+      #{studentCode,jdbcType=VARCHAR}, #{studentLocal,jdbcType=VARCHAR}, #{studentExamNum,jdbcType=VARCHAR}, 
+      #{roomId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.StudentInfo" >
+    insert into student_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        STUDENT_ID,
+      </if>
+      <if test="studentNo != null" >
+        STUDENT_NO,
+      </if>
+      <if test="studentName != null" >
+        STUDENT_NAME,
+      </if>
+      <if test="professionId != null" >
+        PROFESSION_ID,
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="studentEnterDate != null" >
+        STUDENT_ENTER_DATE,
+      </if>
+      <if test="studentIdcardType != null" >
+        STUDENT_IDCARD_TYPE,
+      </if>
+      <if test="studentIdcard != null" >
+        STUDENT_IDCARD,
+      </if>
+      <if test="studentSex != null" >
+        STUDENT_SEX,
+      </if>
+      <if test="studentBirthday != null" >
+        STUDENT_BIRTHDAY,
+      </if>
+      <if test="studentNative != null" >
+        STUDENT_NATIVE,
+      </if>
+      <if test="studentNation != null" >
+        STUDENT_NATION,
+      </if>
+      <if test="studentTel != null" >
+        STUDENT_TEL,
+      </if>
+      <if test="studentEmail != null" >
+        STUDENT_EMAIL,
+      </if>
+      <if test="studentAddress != null" >
+        STUDENT_ADDRESS,
+      </if>
+      <if test="studentCode != null" >
+        STUDENT_CODE,
+      </if>
+      <if test="studentLocal != null" >
+        STUDENT_LOCAL,
+      </if>
+      <if test="studentExamNum != null" >
+        STUDENT_EXAM_NUM,
+      </if>
+      <if test="roomId != null" >
+        ROOM_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNo != null" >
+        #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="professionId != null" >
+        #{professionId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        #{systemId,jdbcType=INTEGER},
+      </if>
+      <if test="studentEnterDate != null" >
+        #{studentEnterDate,jdbcType=DATE},
+      </if>
+      <if test="studentIdcardType != null" >
+        #{studentIdcardType,jdbcType=VARCHAR},
+      </if>
+      <if test="studentIdcard != null" >
+        #{studentIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSex != null" >
+        #{studentSex,jdbcType=VARCHAR},
+      </if>
+      <if test="studentBirthday != null" >
+        #{studentBirthday,jdbcType=DATE},
+      </if>
+      <if test="studentNative != null" >
+        #{studentNative,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNation != null" >
+        #{studentNation,jdbcType=VARCHAR},
+      </if>
+      <if test="studentTel != null" >
+        #{studentTel,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEmail != null" >
+        #{studentEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="studentAddress != null" >
+        #{studentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null" >
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentLocal != null" >
+        #{studentLocal,jdbcType=VARCHAR},
+      </if>
+      <if test="studentExamNum != null" >
+        #{studentExamNum,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+   </insert> 
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.StudentInfo" >
+    update student_info
+    <set >
+      <if test="studentNo != null" >
+        STUDENT_NO = #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        STUDENT_NAME = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="professionId != null" >
+        PROFESSION_ID = #{professionId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID = #{systemId,jdbcType=INTEGER},
+      </if>
+      <if test="studentEnterDate != null" >
+        STUDENT_ENTER_DATE = #{studentEnterDate,jdbcType=DATE},
+      </if>
+      <if test="studentIdcardType != null" >
+        STUDENT_IDCARD_TYPE = #{studentIdcardType,jdbcType=VARCHAR},
+      </if>
+      <if test="studentIdcard != null" >
+        STUDENT_IDCARD = #{studentIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSex != null" >
+        STUDENT_SEX = #{studentSex,jdbcType=VARCHAR},
+      </if>
+      <if test="studentBirthday != null" >
+        STUDENT_BIRTHDAY = #{studentBirthday,jdbcType=DATE},
+      </if>
+      <if test="studentNative != null" >
+        STUDENT_NATIVE = #{studentNative,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNation != null" >
+        STUDENT_NATION = #{studentNation,jdbcType=VARCHAR},
+      </if>
+      <if test="studentTel != null" >
+        STUDENT_TEL = #{studentTel,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEmail != null" >
+        STUDENT_EMAIL = #{studentEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="studentAddress != null" >
+        STUDENT_ADDRESS = #{studentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null" >
+        STUDENT_CODE = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentLocal != null" >
+        STUDENT_LOCAL = #{studentLocal,jdbcType=VARCHAR},
+      </if>
+      <if test="studentExamNum != null" >
+        STUDENT_EXAM_NUM = #{studentExamNum,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        ROOM_ID = #{roomId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.StudentInfo" >
+    update student_info
+    set STUDENT_NO = #{studentNo,jdbcType=VARCHAR},
+      STUDENT_NAME = #{studentName,jdbcType=VARCHAR},
+      PROFESSION_ID = #{professionId,jdbcType=VARCHAR},
+      SYSTEM_ID = #{systemId,jdbcType=INTEGER},
+      STUDENT_ENTER_DATE = #{studentEnterDate,jdbcType=DATE},
+      STUDENT_IDCARD_TYPE = #{studentIdcardType,jdbcType=VARCHAR},
+      STUDENT_IDCARD = #{studentIdcard,jdbcType=VARCHAR},
+      STUDENT_SEX = #{studentSex,jdbcType=VARCHAR},
+      STUDENT_BIRTHDAY = #{studentBirthday,jdbcType=DATE},
+      STUDENT_NATIVE = #{studentNative,jdbcType=VARCHAR},
+      STUDENT_NATION = #{studentNation,jdbcType=VARCHAR},
+      STUDENT_TEL = #{studentTel,jdbcType=VARCHAR},
+      STUDENT_EMAIL = #{studentEmail,jdbcType=VARCHAR},
+      STUDENT_ADDRESS = #{studentAddress,jdbcType=VARCHAR},
+      STUDENT_CODE = #{studentCode,jdbcType=VARCHAR},
+      STUDENT_LOCAL = #{studentLocal,jdbcType=VARCHAR},
+      STUDENT_EXAM_NUM = #{studentExamNum,jdbcType=VARCHAR},
+      ROOM_ID = #{roomId,jdbcType=VARCHAR}
+    where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+  </update>
+</mapper>

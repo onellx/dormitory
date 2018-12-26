@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.ManagerMapperCustom" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.Manager" >
+    <id column="MANAGER_ID" property="managerId" jdbcType="INTEGER" />
+    <result column="MANAGER_CLASS_ID" property="managerClassId" jdbcType="INTEGER" />
+    <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+    <result column="MANAGER_PASSWD" property="managerPasswd" jdbcType="VARCHAR" />
+    <result column="MANAGER_STATE" property="managerState" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="CustomResultMap" type="com.jjvu.dormitory.po.ManagerCustom" >
+    <id column="MANAGER_ID" property="managerId" jdbcType="INTEGER" />
+    <result column="MANAGER_CLASS_ID" property="managerClassId" jdbcType="INTEGER" />
+    <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+    <result column="MANAGER_PASSWD" property="managerPasswd" jdbcType="VARCHAR" />
+    <result column="MANAGER_STATE" property="managerState" jdbcType="INTEGER" />
+    <association property="managerClass" javaType="com.jjvu.dormitory.po.ManagerClass">
+    	<result column="MANAGER_CLASS_NAME" property="managerClassName"/>
+    </association>
+  </resultMap>
+  <resultMap id="dormitoryManagerResultMap" type="com.jjvu.dormitory.po.ManagerCustom" >
+    <id column="MANAGER_ID" property="managerId" jdbcType="INTEGER" />
+    <result column="MANAGER_CLASS_ID" property="managerClassId" jdbcType="INTEGER" />
+    <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+    <result column="MANAGER_PASSWD" property="managerPasswd" jdbcType="VARCHAR" />
+    <result column="MANAGER_STATE" property="managerState" jdbcType="INTEGER" />
+    <association property="dormInfo" javaType="com.jjvu.dormitory.po.DormInfo">
+    	<result column="DORM_NAME" property="dormName"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MANAGER_ID, MANAGER_CLASS_ID, MANAGER_NAME, MANAGER_PASSWD, MANAGER_STATE
+  </sql>
+  
+  <select id="queryList" resultMap="CustomResultMap" parameterType="com.jjvu.dormitory.po.ManagerQueryVo">
+  	SELECT
+		manager.*, manager_class.MANAGER_CLASS_NAME
+	FROM
+		manager,
+		manager_class
+	WHERE
+		manager.MANAGER_CLASS_ID = manager_class.MANAGER_CLASS_ID
+	<if test="managerClass != null" >
+		<if test="managerClass.managerClassId != null" >
+			<if test="managerClass.managerClassId != 0">
+				AND manager_class.MANAGER_CLASS_ID = #{managerClass.managerClassId }
+			</if>
+		</if>
+	</if>
+  </select>
+  
+  <select id="login" resultMap="BaseResultMap" parameterType="com.jjvu.dormitory.po.Manager">
+  	select * from manager
+  	where MANAGER_NAME = #{managerName} and MANAGER_PASSWD = #{managerPasswd}
+  </select>
+  
+  <!-- 
+		通过管理员ID查询宿管的信息以及他所管理的宿舍名称  
+   -->
+  <select id="dormitoryManagerInfo" resultMap="dormitoryManagerResultMap" parameterType="java.lang.Integer">
+  	SELECT
+		manager.*, dorm_info.DORM_NAME
+	FROM
+		manager,
+		dorm_info,
+		manager_dorm_info
+	WHERE
+		manager.MANAGER_ID = #{ManagerId }
+	AND manager.MANAGER_ID = manager_dorm_info.MANAGER_ID
+	AND dorm_info.DORM_ID = manager_dorm_info.DORM_ID
+  </select>
+  
+  <select id="findInfoById" resultMap="CustomResultMap" parameterType="java.lang.Integer">
+  	SELECT
+		manager.*, manager_class.MANAGER_CLASS_NAME
+	FROM
+		manager,
+		manager_class
+	WHERE
+		manager.MANAGER_ID = #{ManagerId }
+	AND manager.MANAGER_CLASS_ID = manager_class.MANAGER_CLASS_ID
+  </select>
+  
+</mapper>

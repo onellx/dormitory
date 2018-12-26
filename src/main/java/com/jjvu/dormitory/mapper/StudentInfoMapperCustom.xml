@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.StudentInfoMapperCustom" >
+  <resultMap id="InfoByKey" type="com.jjvu.dormitory.po.StudentCustom" >
+    <id column="STUDENT_ID" property="studentId" jdbcType="VARCHAR" />
+    <result column="STUDENT_NO" property="studentNo" jdbcType="VARCHAR" />
+    <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR" />
+    <result column="PROFESSION_ID" property="professionId" jdbcType="VARCHAR" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="INTEGER" />
+    <result column="STUDENT_ENTER_DATE" property="studentEnterDate" jdbcType="DATE" />
+    <result column="STUDENT_IDCARD_TYPE" property="studentIdcardType" jdbcType="VARCHAR" />
+    <result column="STUDENT_IDCARD" property="studentIdcard" jdbcType="VARCHAR" />
+    <result column="STUDENT_SEX" property="studentSex" jdbcType="VARCHAR" />
+    <result column="STUDENT_BIRTHDAY" property="studentBirthday" jdbcType="DATE" />
+    <result column="STUDENT_NATIVE" property="studentNative" jdbcType="VARCHAR" />
+    <result column="STUDENT_NATION" property="studentNation" jdbcType="VARCHAR" />
+    <result column="STUDENT_TEL" property="studentTel" jdbcType="VARCHAR" />
+    <result column="STUDENT_EMAIL" property="studentEmail" jdbcType="VARCHAR" />
+    <result column="STUDENT_ADDRESS" property="studentAddress" jdbcType="VARCHAR" />
+    <result column="STUDENT_CODE" property="studentCode" jdbcType="VARCHAR" />
+    <result column="STUDENT_LOCAL" property="studentLocal" jdbcType="VARCHAR" />
+    <result column="STUDENT_EXAM_NUM" property="studentExamNum" jdbcType="VARCHAR" />
+    <result column="ROOM_ID" property="roomId" jdbcType="VARCHAR" />
+    <association property="collegeInfo" javaType="com.jjvu.dormitory.po.CollegeInfo">
+    	<result column="COLLEGE_NAME" property="collegeName"/>
+    </association>
+    <association property="professionInfo" javaType="com.jjvu.dormitory.po.ProfessionInfo">
+    	<result column="PROFESSION_NAME" property="professionName"/>
+    </association>
+    <association property="systemInfo" javaType="com.jjvu.dormitory.po.SystemInfo">
+    	<result column="SYSTEM_NAME" property="systemName"/>
+    </association>
+    <association property="dormInfo" javaType="com.jjvu.dormitory.po.DormInfo">
+    	<result column="DORM_NAME" property="dormName"/>
+    </association>
+    <association property="dormroomInfo" javaType="com.jjvu.dormitory.po.DormroomInfo">
+    	<result column="ROOM_NUM" property="roomNum"/>
+    </association>
+  </resultMap>
+  
+  <resultMap id="QueryInfoList" type="com.jjvu.dormitory.po.StudentCustom" >
+    <id column="STUDENT_ID" property="studentId" jdbcType="VARCHAR" />
+    <result column="STUDENT_NO" property="studentNo" jdbcType="VARCHAR" />
+    <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR" />
+    <result column="STUDENT_SEX" property="studentSex" jdbcType="VARCHAR" />
+    <association property="collegeInfo" javaType="com.jjvu.dormitory.po.CollegeInfo">
+    	<result column="COLLEGE_NAME" property="collegeName"/>
+    </association>
+    <association property="professionInfo" javaType="com.jjvu.dormitory.po.ProfessionInfo">
+    	<result column="PROFESSION_NAME" property="professionName"/>
+    </association>
+    <association property="systemInfo" javaType="com.jjvu.dormitory.po.SystemInfo">
+    	<result column="SYSTEM_NAME" property="systemName"/>
+    </association>
+    <association property="dormInfo" javaType="com.jjvu.dormitory.po.DormInfo">
+    	<result column="DORM_NAME" property="dormName"/>
+    </association>
+    <association property="dormroomInfo" javaType="com.jjvu.dormitory.po.DormroomInfo">
+    	<result column="ROOM_NUM" property="roomNum"/>
+    </association>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    STUDENT_ID, STUDENT_NO, STUDENT_NAME, PROFESSION_ID, SYSTEM_ID, STUDENT_ENTER_DATE, 
+    STUDENT_IDCARD_TYPE, STUDENT_IDCARD, STUDENT_SEX, STUDENT_BIRTHDAY, STUDENT_NATIVE, 
+    STUDENT_NATION, STUDENT_TEL, STUDENT_EMAIL, STUDENT_ADDRESS, STUDENT_CODE, STUDENT_LOCAL, 
+    STUDENT_EXAM_NUM, ROOM_ID
+  </sql>
+  
+  <!-- 
+  	根据管理员ID查询学生列表
+  	返回的数据有：
+  		学生ID，学号，学生性别，学生姓名
+  		学院名称，专业名称，学制名称
+  		所在宿舍楼，所在房间
+   -->
+  <select id="infoList" resultMap="QueryInfoList" parameterType="com.jjvu.dormitory.po.StudentQueryVo">
+	SELECT
+		student_info.STUDENT_ID,
+		student_info.STUDENT_NO,
+		student_info.STUDENT_SEX,
+		student_info.STUDENT_NAME,
+		college_info.COLLEGE_NAME,
+		profession_info.PROFESSION_NAME,
+		system_info.SYSTEM_NAME,
+		dorm_info.DORM_NAME,
+		dormroom_info.ROOM_NUM
+	FROM
+		college_info,
+		profession_info,
+		system_info,
+		manager,
+		manager_college_info,
+		student_info
+	LEFT JOIN dormroom_info ON dormroom_info.ROOM_ID = student_info.ROOM_ID
+	LEFT JOIN dorm_info ON dorm_info.DORM_ID = dormroom_info.DORM_ID
+	WHERE
+		manager.MANAGER_ID = #{manager.managerId }
+	AND manager.MANAGER_ID = manager_college_info.MANAGER_ID
+	AND college_info.COLLEGE_ID = manager_college_info.COLLEGE_ID
+	AND student_info.PROFESSION_ID = profession_info.PROFESSION_ID
+	AND profession_info.COLLEGE_ID = college_info.COLLEGE_ID
+	AND student_info.SYSTEM_ID = system_info.SYSTEM_ID
+  <if test="date !=null and date!=''">
+	  AND DATE_FORMAT(STUDENT_ENTER_DATE,'%Y') = #{date }
+  </if>
+  </select>
+  
+  <!-- 
+  	查找已经分配过寝室的人
+  
+   -->
+  <select id="roomNotFull" resultMap="QueryInfoList" parameterType="com.jjvu.dormitory.po.StudentQueryVo">
+  SELECT
+		student_info.STUDENT_ID,
+		student_info.STUDENT_NO,
+		student_info.STUDENT_SEX,
+		student_info.STUDENT_NAME,
+		college_info.COLLEGE_NAME,
+		profession_info.PROFESSION_NAME,
+		system_info.SYSTEM_NAME,
+		dorm_info.DORM_NAME,
+		dormroom_info.ROOM_NUM
+	FROM
+		college_info,
+		profession_info,
+		system_info,
+		manager,
+		manager_college_info,
+		student_info,
+		dormroom_info,
+		dorm_info
+	WHERE
+		manager.MANAGER_ID = #{manager.managerId }
+	AND manager.MANAGER_ID = manager_college_info.MANAGER_ID
+	AND college_info.COLLEGE_ID = manager_college_info.COLLEGE_ID
+	AND student_info.PROFESSION_ID = profession_info.PROFESSION_ID
+	AND profession_info.COLLEGE_ID = college_info.COLLEGE_ID
+	AND student_info.SYSTEM_ID = system_info.SYSTEM_ID
+	AND dormroom_info.ROOM_ID = student_info.ROOM_ID
+	AND dorm_info.DORM_ID = dormroom_info.DORM_ID
+  </select>
+  
+  <!-- 
+  	根据学生ID查询学生信息
+   -->
+  <select id="infoById" parameterType="java.lang.String" resultMap="InfoByKey">
+    SELECT
+		student_info.*,
+		college_info.COLLEGE_NAME,
+		profession_info.PROFESSION_NAME,
+		system_info.SYSTEM_NAME,
+		dorm_info.DORM_NAME,
+		dormroom_info.ROOM_NUM
+	FROM
+		student_info,
+		college_info,
+		profession_info,
+		dorm_info,
+		dormroom_info,
+		system_info
+	WHERE
+		student_info.STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+	AND student_info.PROFESSION_ID = profession_info.PROFESSION_ID
+	AND profession_info.COLLEGE_ID = college_info.COLLEGE_ID
+	AND student_info.SYSTEM_ID = system_info.SYSTEM_ID
+	AND student_info.ROOM_ID = dormroom_info.ROOM_ID
+	AND dormroom_info.DORM_ID = dorm_info.DORM_ID
+  </select>
+  
+  <select id="infoByNo" parameterType="java.lang.String" resultMap="InfoByKey">
+    SELECT
+		student_info.*,
+		college_info.COLLEGE_NAME,
+		profession_info.PROFESSION_NAME,
+		system_info.SYSTEM_NAME,
+		dorm_info.DORM_NAME,
+		dormroom_info.ROOM_NUM
+	FROM
+		student_info,
+		college_info,
+		profession_info,
+		dorm_info,
+		dormroom_info,
+		system_info
+	WHERE
+		student_info.STUDENT_NO = #{studentNo,jdbcType=VARCHAR}
+	AND student_info.PROFESSION_ID = profession_info.PROFESSION_ID
+	AND profession_info.COLLEGE_ID = college_info.COLLEGE_ID
+	AND student_info.SYSTEM_ID = system_info.SYSTEM_ID
+	AND student_info.ROOM_ID = dormroom_info.ROOM_ID
+	AND dormroom_info.DORM_ID = dorm_info.DORM_ID
+  </select>
+  
+  <update id="studentToRoom" parameterType="com.jjvu.dormitory.po.StudentInfo" >
+    update student_info
+    set 
+      ROOM_ID = #{roomId,jdbcType=VARCHAR}
+    where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

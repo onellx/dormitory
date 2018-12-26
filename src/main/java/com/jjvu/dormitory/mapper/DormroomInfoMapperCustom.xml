@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.DormroomInfoMapperCustom" >
+  
+  <resultMap id="QueryListMap" type="com.jjvu.dormitory.po.DormroomCustom" >
+    <id column="ROOM_ID" property="roomId" jdbcType="VARCHAR" />
+    <result column="ROOM_NUM" property="roomNum" jdbcType="VARCHAR" />
+    <result column="DORM_ID" property="dormId" jdbcType="VARCHAR" />
+    <result column="FLOOR_NUM" property="floorNum" jdbcType="INTEGER" />
+    <result column="ROOM_BEDS" property="roomBeds" jdbcType="INTEGER" />
+    <result column="ROOM_ASSIGNBEDS" property="roomAssignbeds" jdbcType="INTEGER" />
+    <result column="ROOM_HEAD" property="roomHead" jdbcType="VARCHAR" />
+    <result column="ROOM_TEL" property="roomTel" jdbcType="VARCHAR" />
+    <result column="ROOM_CHARGE" property="roomCharge" jdbcType="INTEGER" />
+    <result column="ROOM_USECONDITION" property="roomUsecondition" jdbcType="VARCHAR" />
+    <result column="ROOM_NOTES" property="roomNotes" jdbcType="VARCHAR" />
+    <association property="dorm" javaType="com.jjvu.dormitory.po.DormInfo">
+    	<result column="DORM_NAME" property="dormName"/>
+    </association>
+  </resultMap>
+  
+  <resultMap id="roomInfoMap" type="com.jjvu.dormitory.po.DormroomCustom" >
+    <id column="ROOM_ID" property="roomId" jdbcType="VARCHAR" />
+    <result column="ROOM_NUM" property="roomNum" jdbcType="VARCHAR" />
+    <result column="DORM_ID" property="dormId" jdbcType="VARCHAR" />
+    <result column="FLOOR_NUM" property="floorNum" jdbcType="INTEGER" />
+    <result column="ROOM_BEDS" property="roomBeds" jdbcType="INTEGER" />
+    <result column="ROOM_ASSIGNBEDS" property="roomAssignbeds" jdbcType="INTEGER" />
+    <result column="ROOM_HEAD" property="roomHead" jdbcType="VARCHAR" />
+    <result column="ROOM_TEL" property="roomTel" jdbcType="VARCHAR" />
+    <result column="ROOM_CHARGE" property="roomCharge" jdbcType="INTEGER" />
+    <result column="ROOM_USECONDITION" property="roomUsecondition" jdbcType="VARCHAR" />
+    <result column="ROOM_NOTES" property="roomNotes" jdbcType="VARCHAR" />
+    <association property="dorm" javaType="com.jjvu.dormitory.po.DormInfo">
+    	<result column="DORM_NAME" property="dormName"/>
+    </association>
+    <collection property="studentList" ofType="com.jjvu.dormitory.po.StudentInfo">
+    	<result column="STUDENT_NAME" property="studentName"/>
+    </collection>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ROOM_ID, ROOM_NUM, DORM_ID, FLOOR_NUM, ROOM_BEDS, ROOM_ASSIGNBEDS, ROOM_HEAD, ROOM_TEL, 
+    ROOM_CHARGE, ROOM_USECONDITION, ROOM_NOTES
+  </sql>
+  
+  <select id="queryList"  parameterType="com.jjvu.dormitory.po.DormroomQueryVo" resultMap="QueryListMap">
+	SELECT
+		dormroom_info.*,
+		dorm_info.DORM_NAME
+	FROM
+		dormroom_info,
+		dorm_info,
+		college_info,
+		college_room_info,
+		manager,
+		manager_college_info
+	WHERE
+		manager.MANAGER_ID = #{manager.managerId }
+	AND manager.MANAGER_ID = manager_college_info.MANAGER_ID
+	AND college_info.COLLEGE_ID = manager_college_info.COLLEGE_ID
+	AND college_info.COLLEGE_ID = college_room_info.COLLEGE_ID
+	AND dormroom_info.ROOM_ID = college_room_info.ROOM_ID
+  </select>
+  
+  <select id="listNotFull"  parameterType="com.jjvu.dormitory.po.DormroomQueryVo" resultMap="QueryListMap">
+	SELECT
+		dormroom_info.*,
+		dorm_info.DORM_NAME
+	FROM
+		dormroom_info,
+		dorm_info,
+		college_info,
+		college_room_info,
+		manager,
+		manager_college_info
+	WHERE
+		manager.MANAGER_ID = #{manager.managerId }
+	AND dormroom_info.ROOM_ASSIGNBEDS &lt; dormroom_info.ROOM_BEDS
+	AND manager.MANAGER_ID = manager_college_info.MANAGER_ID
+	AND college_info.COLLEGE_ID = manager_college_info.COLLEGE_ID
+	AND college_info.COLLEGE_ID = college_room_info.COLLEGE_ID
+	AND dormroom_info.ROOM_ID = college_room_info.ROOM_ID
+  </select>
+  
+  <update id="assignbedsPlus" parameterType="java.lang.String">
+  	UPDATE dormroom_info
+	SET ROOM_ASSIGNBEDS = ROOM_ASSIGNBEDS + 1
+	WHERE
+		ROOM_ID = #{roomId }
+  </update>
+  
+  <update id="assignbedsLess" parameterType="java.lang.String">
+  	UPDATE dormroom_info
+	SET ROOM_ASSIGNBEDS = ROOM_ASSIGNBEDS - 1
+	WHERE
+		ROOM_ID = #{roomId }
+  </update>
+  
+  <select id="findRoomInfo" parameterType="java.lang.String" resultMap="roomInfoMap">
+  	SELECT
+		dormroom_info.*,
+		dorm_info.DORM_NAME,
+		student_info.STUDENT_NAME
+	FROM
+		dormroom_info,
+		dorm_info,
+		student_info
+	WHERE
+		dormroom_info.ROOM_ID = #{roomId }
+	AND dormroom_info.DORM_ID = dorm_info.DORM_ID
+	AND student_info.ROOM_ID = dormroom_info.ROOM_ID
+  </select>
+  
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.MaclassModuleInfoMapperCustom" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.MaclassModuleInfo" >
+    <id column="MM_ID" property="mmId" jdbcType="INTEGER" />
+    <result column="MANAGER_CLASS_ID" property="managerClassId" jdbcType="INTEGER" />
+    <result column="MODULE_ID" property="moduleId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="MMIDtoName" type="com.jjvu.dormitory.po.MaclassModuleCustom" >
+    <id column="MM_ID" property="mmId" jdbcType="INTEGER" />
+    <result column="MANAGER_CLASS_NAME" property="managerClassName" />
+    <result column="MODULE_NAME" property="moduleName" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    MM_ID, MANAGER_CLASS_ID, MODULE_ID
+  </sql>
+  
+  <select id="findMaclassModuleByMid" resultMap="MMIDtoName" parameterType="java.lang.Integer" >
+    SELECT
+		maclass_module_info.MM_ID,
+		manager_class.MANAGER_CLASS_NAME,
+		module_info.MODULE_NAME
+	FROM
+		maclass_module_info,
+		manager_class,
+		module_info
+	WHERE
+		manager_class.MANAGER_CLASS_ID = #{managerClassId }
+	AND manager_class.MANAGER_CLASS_ID = maclass_module_info.MANAGER_CLASS_ID
+	AND module_info.MODULE_ID = maclass_module_info.MODULE_ID
+  </select>
+  
+</mapper>

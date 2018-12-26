@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.DormInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.DormInfo" >
+    <id column="DORM_ID" property="dormId" jdbcType="VARCHAR" />
+    <result column="DORM_NAME" property="dormName" jdbcType="VARCHAR" />
+    <result column="DORM_LIMIT" property="dormLimit" jdbcType="VARCHAR" />
+    <result column="DORM_MANAGER" property="dormManager" jdbcType="VARCHAR" />
+    <result column="DORM_MANAGER_TEL" property="dormManagerTel" jdbcType="VARCHAR" />
+    <result column="FLOOR_COUNT" property="floorCount" jdbcType="INTEGER" />
+    <result column="ROOM_COUNT" property="roomCount" jdbcType="INTEGER" />
+    <result column="BED_COUNT" property="bedCount" jdbcType="INTEGER" />
+    <result column="ASSIGN_COUNT" property="assignCount" jdbcType="INTEGER" />
+    <result column="USE_CONDITION" property="useCondition" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DORM_ID, DORM_NAME, DORM_LIMIT, DORM_MANAGER, DORM_MANAGER_TEL, FLOOR_COUNT, ROOM_COUNT, 
+    BED_COUNT, ASSIGN_COUNT, USE_CONDITION, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dorm_info
+    where DORM_ID = #{dormId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from dorm_info
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dorm_info
+    where DORM_ID = #{dormId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.DormInfo" >
+    insert into dorm_info (DORM_ID, DORM_NAME, DORM_LIMIT, 
+      DORM_MANAGER, DORM_MANAGER_TEL, FLOOR_COUNT, 
+      ROOM_COUNT, BED_COUNT, ASSIGN_COUNT, 
+      USE_CONDITION, REMARK)
+    values (#{dormId,jdbcType=VARCHAR}, #{dormName,jdbcType=VARCHAR}, #{dormLimit,jdbcType=VARCHAR}, 
+      #{dormManager,jdbcType=VARCHAR}, #{dormManagerTel,jdbcType=VARCHAR}, #{floorCount,jdbcType=INTEGER}, 
+      #{roomCount,jdbcType=INTEGER}, #{bedCount,jdbcType=INTEGER}, #{assignCount,jdbcType=INTEGER}, 
+      #{useCondition,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.DormInfo" >
+    insert into dorm_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dormId != null" >
+        DORM_ID,
+      </if>
+      <if test="dormName != null" >
+        DORM_NAME,
+      </if>
+      <if test="dormLimit != null" >
+        DORM_LIMIT,
+      </if>
+      <if test="dormManager != null" >
+        DORM_MANAGER,
+      </if>
+      <if test="dormManagerTel != null" >
+        DORM_MANAGER_TEL,
+      </if>
+      <if test="floorCount != null" >
+        FLOOR_COUNT,
+      </if>
+      <if test="roomCount != null" >
+        ROOM_COUNT,
+      </if>
+      <if test="bedCount != null" >
+        BED_COUNT,
+      </if>
+      <if test="assignCount != null" >
+        ASSIGN_COUNT,
+      </if>
+      <if test="useCondition != null" >
+        USE_CONDITION,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dormId != null" >
+        #{dormId,jdbcType=VARCHAR},
+      </if>
+      <if test="dormName != null" >
+        #{dormName,jdbcType=VARCHAR},
+      </if>
+      <if test="dormLimit != null" >
+        #{dormLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="dormManager != null" >
+        #{dormManager,jdbcType=VARCHAR},
+      </if>
+      <if test="dormManagerTel != null" >
+        #{dormManagerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="floorCount != null" >
+        #{floorCount,jdbcType=INTEGER},
+      </if>
+      <if test="roomCount != null" >
+        #{roomCount,jdbcType=INTEGER},
+      </if>
+      <if test="bedCount != null" >
+        #{bedCount,jdbcType=INTEGER},
+      </if>
+      <if test="assignCount != null" >
+        #{assignCount,jdbcType=INTEGER},
+      </if>
+      <if test="useCondition != null" >
+        #{useCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.DormInfo" >
+    update dorm_info
+    <set >
+      <if test="dormName != null" >
+        DORM_NAME = #{dormName,jdbcType=VARCHAR},
+      </if>
+      <if test="dormLimit != null" >
+        DORM_LIMIT = #{dormLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="dormManager != null" >
+        DORM_MANAGER = #{dormManager,jdbcType=VARCHAR},
+      </if>
+      <if test="dormManagerTel != null" >
+        DORM_MANAGER_TEL = #{dormManagerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="floorCount != null" >
+        FLOOR_COUNT = #{floorCount,jdbcType=INTEGER},
+      </if>
+      <if test="roomCount != null" >
+        ROOM_COUNT = #{roomCount,jdbcType=INTEGER},
+      </if>
+      <if test="bedCount != null" >
+        BED_COUNT = #{bedCount,jdbcType=INTEGER},
+      </if>
+      <if test="assignCount != null" >
+        ASSIGN_COUNT = #{assignCount,jdbcType=INTEGER},
+      </if>
+      <if test="useCondition != null" >
+        USE_CONDITION = #{useCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DORM_ID = #{dormId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.DormInfo" >
+    update dorm_info
+    set DORM_NAME = #{dormName,jdbcType=VARCHAR},
+      DORM_LIMIT = #{dormLimit,jdbcType=VARCHAR},
+      DORM_MANAGER = #{dormManager,jdbcType=VARCHAR},
+      DORM_MANAGER_TEL = #{dormManagerTel,jdbcType=VARCHAR},
+      FLOOR_COUNT = #{floorCount,jdbcType=INTEGER},
+      ROOM_COUNT = #{roomCount,jdbcType=INTEGER},
+      BED_COUNT = #{bedCount,jdbcType=INTEGER},
+      ASSIGN_COUNT = #{assignCount,jdbcType=INTEGER},
+      USE_CONDITION = #{useCondition,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where DORM_ID = #{dormId,jdbcType=VARCHAR}
+  </update>
+</mapper>

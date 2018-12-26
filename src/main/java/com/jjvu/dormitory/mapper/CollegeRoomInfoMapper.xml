@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.CollegeRoomInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.CollegeRoomInfo" >
+    <id column="CR_ID" property="crId" jdbcType="INTEGER" />
+    <result column="COLLEGE_ID" property="collegeId" jdbcType="VARCHAR" />
+    <result column="ROOM_ID" property="roomId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CR_ID, COLLEGE_ID, ROOM_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from college_room_info
+    where CR_ID = #{crId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from college_room_info
+    where CR_ID = #{crId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.CollegeRoomInfo" >
+    insert into college_room_info (CR_ID, COLLEGE_ID, ROOM_ID
+      )
+    values (#{crId,jdbcType=INTEGER}, #{collegeId,jdbcType=VARCHAR}, #{roomId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.CollegeRoomInfo" >
+    insert into college_room_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="crId != null" >
+        CR_ID,
+      </if>
+      <if test="collegeId != null" >
+        COLLEGE_ID,
+      </if>
+      <if test="roomId != null" >
+        ROOM_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="crId != null" >
+        #{crId,jdbcType=INTEGER},
+      </if>
+      <if test="collegeId != null" >
+        #{collegeId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.CollegeRoomInfo" >
+    update college_room_info
+    <set >
+      <if test="collegeId != null" >
+        COLLEGE_ID = #{collegeId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        ROOM_ID = #{roomId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CR_ID = #{crId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.CollegeRoomInfo" >
+    update college_room_info
+    set COLLEGE_ID = #{collegeId,jdbcType=VARCHAR},
+      ROOM_ID = #{roomId,jdbcType=VARCHAR}
+    where CR_ID = #{crId,jdbcType=INTEGER}
+  </update>
+</mapper>

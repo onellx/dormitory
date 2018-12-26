@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.ItemsInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.ItemsInfo" >
+    <id column="ITEMS_INFO_ID" property="itemsInfoId" jdbcType="VARCHAR" />
+    <result column="ITEMS_INFO_NAME" property="itemsInfoName" jdbcType="VARCHAR" />
+    <result column="STUDENT_EXAM_NUM" property="studentExamNum" jdbcType="VARCHAR" />
+    <result column="ITEMS_INFO_CATEGORY" property="itemsInfoCategory" jdbcType="VARCHAR" />
+    <result column="COMPUTER_MAC" property="computerMac" jdbcType="VARCHAR" />
+    <result column="ITEMS_INFO_IMAGE" property="itemsInfoImage" jdbcType="VARCHAR" />
+    <result column="ITEMS_INFO_DESCRIBE" property="itemsInfoDescribe" jdbcType="VARCHAR" />
+    <result column="ITEMS_REVIEW" property="itemsReview" jdbcType="VARCHAR" />
+    <result column="ITEMS_LOCATION" property="itemsLocation" jdbcType="VARCHAR" />
+    <result column="ITEMS_LOCATION_TIME" property="itemsLocationTime" jdbcType="VARCHAR" />
+    <result column="ITEMS_STATE" property="itemsState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ITEMS_INFO_ID, ITEMS_INFO_NAME, STUDENT_EXAM_NUM, ITEMS_INFO_CATEGORY, COMPUTER_MAC, 
+    ITEMS_INFO_IMAGE, ITEMS_INFO_DESCRIBE, ITEMS_REVIEW, ITEMS_LOCATION, ITEMS_LOCATION_TIME, 
+    ITEMS_STATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jjvu.dormitory.po.ItemsInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from items_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from items_info
+    where ITEMS_INFO_ID = #{itemsInfoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from items_info
+    where ITEMS_INFO_ID = #{itemsInfoId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jjvu.dormitory.po.ItemsInfoExample" >
+    delete from items_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.ItemsInfo" >
+    insert into items_info (ITEMS_INFO_ID, ITEMS_INFO_NAME, STUDENT_EXAM_NUM, 
+      ITEMS_INFO_CATEGORY, COMPUTER_MAC, ITEMS_INFO_IMAGE, 
+      ITEMS_INFO_DESCRIBE, ITEMS_REVIEW, ITEMS_LOCATION, 
+      ITEMS_LOCATION_TIME, ITEMS_STATE)
+    values (#{itemsInfoId,jdbcType=VARCHAR}, #{itemsInfoName,jdbcType=VARCHAR}, #{studentExamNum,jdbcType=VARCHAR}, 
+      #{itemsInfoCategory,jdbcType=VARCHAR}, #{computerMac,jdbcType=VARCHAR}, #{itemsInfoImage,jdbcType=VARCHAR}, 
+      #{itemsInfoDescribe,jdbcType=VARCHAR}, #{itemsReview,jdbcType=VARCHAR}, #{itemsLocation,jdbcType=VARCHAR}, 
+      #{itemsLocationTime,jdbcType=VARCHAR}, #{itemsState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.ItemsInfo" >
+    insert into items_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemsInfoId != null" >
+        ITEMS_INFO_ID,
+      </if>
+      <if test="itemsInfoName != null" >
+        ITEMS_INFO_NAME,
+      </if>
+      <if test="studentExamNum != null" >
+        STUDENT_EXAM_NUM,
+      </if>
+      <if test="itemsInfoCategory != null" >
+        ITEMS_INFO_CATEGORY,
+      </if>
+      <if test="computerMac != null" >
+        COMPUTER_MAC,
+      </if>
+      <if test="itemsInfoImage != null" >
+        ITEMS_INFO_IMAGE,
+      </if>
+      <if test="itemsInfoDescribe != null" >
+        ITEMS_INFO_DESCRIBE,
+      </if>
+      <if test="itemsReview != null" >
+        ITEMS_REVIEW,
+      </if>
+      <if test="itemsLocation != null" >
+        ITEMS_LOCATION,
+      </if>
+      <if test="itemsLocationTime != null" >
+        ITEMS_LOCATION_TIME,
+      </if>
+      <if test="itemsState != null" >
+        ITEMS_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemsInfoId != null" >
+        #{itemsInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsInfoName != null" >
+        #{itemsInfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentExamNum != null" >
+        #{studentExamNum,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsInfoCategory != null" >
+        #{itemsInfoCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="computerMac != null" >
+        #{computerMac,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsInfoImage != null" >
+        #{itemsInfoImage,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsInfoDescribe != null" >
+        #{itemsInfoDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsReview != null" >
+        #{itemsReview,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsLocation != null" >
+        #{itemsLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsLocationTime != null" >
+        #{itemsLocationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsState != null" >
+        #{itemsState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jjvu.dormitory.po.ItemsInfoExample" resultType="java.lang.Integer" >
+    select count(*) from items_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update items_info
+    <set >
+      <if test="record.itemsInfoId != null" >
+        ITEMS_INFO_ID = #{record.itemsInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsInfoName != null" >
+        ITEMS_INFO_NAME = #{record.itemsInfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentExamNum != null" >
+        STUDENT_EXAM_NUM = #{record.studentExamNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsInfoCategory != null" >
+        ITEMS_INFO_CATEGORY = #{record.itemsInfoCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.computerMac != null" >
+        COMPUTER_MAC = #{record.computerMac,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsInfoImage != null" >
+        ITEMS_INFO_IMAGE = #{record.itemsInfoImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsInfoDescribe != null" >
+        ITEMS_INFO_DESCRIBE = #{record.itemsInfoDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsReview != null" >
+        ITEMS_REVIEW = #{record.itemsReview,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsLocation != null" >
+        ITEMS_LOCATION = #{record.itemsLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsLocationTime != null" >
+        ITEMS_LOCATION_TIME = #{record.itemsLocationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemsState != null" >
+        ITEMS_STATE = #{record.itemsState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update items_info
+    set ITEMS_INFO_ID = #{record.itemsInfoId,jdbcType=VARCHAR},
+      ITEMS_INFO_NAME = #{record.itemsInfoName,jdbcType=VARCHAR},
+      STUDENT_EXAM_NUM = #{record.studentExamNum,jdbcType=VARCHAR},
+      ITEMS_INFO_CATEGORY = #{record.itemsInfoCategory,jdbcType=VARCHAR},
+      COMPUTER_MAC = #{record.computerMac,jdbcType=VARCHAR},
+      ITEMS_INFO_IMAGE = #{record.itemsInfoImage,jdbcType=VARCHAR},
+      ITEMS_INFO_DESCRIBE = #{record.itemsInfoDescribe,jdbcType=VARCHAR},
+      ITEMS_REVIEW = #{record.itemsReview,jdbcType=VARCHAR},
+      ITEMS_LOCATION = #{record.itemsLocation,jdbcType=VARCHAR},
+      ITEMS_LOCATION_TIME = #{record.itemsLocationTime,jdbcType=VARCHAR},
+      ITEMS_STATE = #{record.itemsState,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.ItemsInfo" >
+    update items_info
+    <set >
+      <if test="itemsInfoName != null" >
+        ITEMS_INFO_NAME = #{itemsInfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentExamNum != null" >
+        STUDENT_EXAM_NUM = #{studentExamNum,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsInfoCategory != null" >
+        ITEMS_INFO_CATEGORY = #{itemsInfoCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="computerMac != null" >
+        COMPUTER_MAC = #{computerMac,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsInfoImage != null" >
+        ITEMS_INFO_IMAGE = #{itemsInfoImage,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsInfoDescribe != null" >
+        ITEMS_INFO_DESCRIBE = #{itemsInfoDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsReview != null" >
+        ITEMS_REVIEW = #{itemsReview,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsLocation != null" >
+        ITEMS_LOCATION = #{itemsLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsLocationTime != null" >
+        ITEMS_LOCATION_TIME = #{itemsLocationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsState != null" >
+        ITEMS_STATE = #{itemsState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ITEMS_INFO_ID = #{itemsInfoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.ItemsInfo" >
+    update items_info
+    set ITEMS_INFO_NAME = #{itemsInfoName,jdbcType=VARCHAR},
+      STUDENT_EXAM_NUM = #{studentExamNum,jdbcType=VARCHAR},
+      ITEMS_INFO_CATEGORY = #{itemsInfoCategory,jdbcType=VARCHAR},
+      COMPUTER_MAC = #{computerMac,jdbcType=VARCHAR},
+      ITEMS_INFO_IMAGE = #{itemsInfoImage,jdbcType=VARCHAR},
+      ITEMS_INFO_DESCRIBE = #{itemsInfoDescribe,jdbcType=VARCHAR},
+      ITEMS_REVIEW = #{itemsReview,jdbcType=VARCHAR},
+      ITEMS_LOCATION = #{itemsLocation,jdbcType=VARCHAR},
+      ITEMS_LOCATION_TIME = #{itemsLocationTime,jdbcType=VARCHAR},
+      ITEMS_STATE = #{itemsState,jdbcType=VARCHAR}
+    where ITEMS_INFO_ID = #{itemsInfoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

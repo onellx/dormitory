@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jjvu.dormitory.mapper.ManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.jjvu.dormitory.po.Manager" >
+    <id column="MANAGER_ID" property="managerId" jdbcType="INTEGER" />
+    <result column="MANAGER_CLASS_ID" property="managerClassId" jdbcType="INTEGER" />
+    <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+    <result column="MANAGER_PASSWD" property="managerPasswd" jdbcType="VARCHAR" />
+    <result column="MANAGER_STATE" property="managerState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MANAGER_ID, MANAGER_CLASS_ID, MANAGER_NAME, MANAGER_PASSWD, MANAGER_STATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from manager
+    where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager
+    where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jjvu.dormitory.po.Manager" >
+    insert into manager (MANAGER_ID, MANAGER_CLASS_ID, MANAGER_NAME, 
+      MANAGER_PASSWD, MANAGER_STATE)
+    values (#{managerId,jdbcType=INTEGER}, #{managerClassId,jdbcType=INTEGER}, #{managerName,jdbcType=VARCHAR}, 
+      #{managerPasswd,jdbcType=VARCHAR}, #{managerState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jjvu.dormitory.po.Manager" >
+    <selectKey keyProperty="managerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="managerId != null" >
+        MANAGER_ID,
+      </if>
+      <if test="managerClassId != null" >
+        MANAGER_CLASS_ID,
+      </if>
+      <if test="managerName != null" >
+        MANAGER_NAME,
+      </if>
+      <if test="managerPasswd != null" >
+        MANAGER_PASSWD,
+      </if>
+      <if test="managerState != null" >
+        MANAGER_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="managerId != null" >
+        #{managerId,jdbcType=INTEGER},
+      </if>
+      <if test="managerClassId != null" >
+        #{managerClassId,jdbcType=INTEGER},
+      </if>
+      <if test="managerName != null" >
+        #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerPasswd != null" >
+        #{managerPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="managerState != null" >
+        #{managerState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jjvu.dormitory.po.Manager" >
+    update manager
+    <set >
+      <if test="managerClassId != null" >
+        MANAGER_CLASS_ID = #{managerClassId,jdbcType=INTEGER},
+      </if>
+      <if test="managerName != null" >
+        MANAGER_NAME = #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerPasswd != null" >
+        MANAGER_PASSWD = #{managerPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="managerState != null" >
+        MANAGER_STATE = #{managerState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jjvu.dormitory.po.Manager" >
+    update manager
+    set MANAGER_CLASS_ID = #{managerClassId,jdbcType=INTEGER},
+      MANAGER_NAME = #{managerName,jdbcType=VARCHAR},
+      MANAGER_PASSWD = #{managerPasswd,jdbcType=VARCHAR},
+      MANAGER_STATE = #{managerState,jdbcType=INTEGER}
+    where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+  </update>
+</mapper>
